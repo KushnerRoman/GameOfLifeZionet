@@ -10,7 +10,7 @@ public class GameOfLife extends JFrame {
     public  int[][] oneDBoard;
 
 
-    public GameOfLife(int chooseRows, int chooseCols, String difficulty, int delay) {
+    public GameOfLife(int chooseRows, int chooseCols, String difficulty, int delay,String rule) {
 
         oneDBoard=makeTwoDArray(chooseCols,chooseRows,difficulty);
         setSize(500, 500);
@@ -47,8 +47,26 @@ public class GameOfLife extends JFrame {
         Timer timer = new Timer(delay, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int[][] nextGenBoard=new int[oneDBoard.length][oneDBoard.length];
+                switch (rule) {
+                    case "Conway":
+                        nextGenBoard = nextGenerationBoard(oneDBoard);
 
-                int[][] nextGenBoard = nextGenerationBoard(oneDBoard);
+                        break;
+                    case "Spontaneous":
+                        nextGenBoard = nextGenerationBoardSpontaneous(oneDBoard);
+                        break;
+                    case "Hyper Active":
+                        nextGenBoard = nextGenerationBoardHyperActive(oneDBoard);
+                        break;
+                    case "High Life":
+                        nextGenBoard = nextGenerationBoardHalfLife(oneDBoard);
+                        break;
+                    default:
+                        nextGenBoard = nextGenerationBoard(oneDBoard);
+                }
+
+
                 oneDBoard=nextGenBoard;
 
                 for (int i = 0; i < nextGenBoard.length; i++) {
@@ -131,6 +149,97 @@ public class GameOfLife extends JFrame {
                 }
                 if(prevBoard[i][j]==0 ) {
                     if( sum==3){
+                        nextBoard[i][j]=1;
+                    }
+                }
+
+
+
+            }
+        }
+
+        return nextBoard;
+    }
+    public int[][] nextGenerationBoardHalfLife(int[][] prevBoard){
+        int [][] nextBoard=new int[prevBoard.length][prevBoard.length];
+        for(int i=1;i<prevBoard.length-1;i++){
+            for (int j=1;j< prevBoard.length-1;j++){
+
+                int sum= countStatesOfCells(prevBoard,i,j);
+                if(prevBoard[i][j]==1) {
+                    if (sum < 2 || sum > 3) {
+                        nextBoard[i][j] = 0;
+                    }
+                    if (sum == 2 || sum == 3) {
+                        nextBoard[i][j] = 1;
+                    }
+                }
+                if(prevBoard[i][j]==0 ) {
+                    if( sum==3){
+                        nextBoard[i][j]=1;
+                    } else {
+                        nextBoard[i][j]=0;
+                    }
+
+                }
+
+
+
+            }
+        }
+
+        return nextBoard;
+    }
+    public int[][] nextGenerationBoardHyperActive(int[][] prevBoard){
+        int [][] nextBoard=new int[prevBoard.length][prevBoard.length];
+        for(int i=1;i<prevBoard.length-1;i++){
+            for (int j=1;j< prevBoard.length-1;j++){
+
+                int sum= countStatesOfCells(prevBoard,i,j);
+                if(prevBoard[i][j]==1) {
+                    if (sum < 2 || sum > 5) {
+                        nextBoard[i][j] = 0;
+                    }
+                    if (sum == 2 || sum == 3) {
+                        nextBoard[i][j] = 1;
+                    }
+                }
+                if(prevBoard[i][j]==0 ) {
+                    if( sum==3){
+                        nextBoard[i][j]=1;
+                    } else {
+                        nextBoard[i][j]=0;
+                    }
+
+                }
+
+
+
+            }
+        }
+
+        return nextBoard;
+    }
+
+    public int[][] nextGenerationBoardSpontaneous(int[][] prevBoard){
+        int [][] nextBoard=new int[prevBoard.length][prevBoard.length];
+        for(int i=1;i<prevBoard.length-1;i++){
+            for (int j=1;j< prevBoard.length-1;j++){
+
+                int sum= countStatesOfCells(prevBoard,i,j);
+                if(prevBoard[i][j]==1) {
+                    if (sum < 2 || sum > 3) {
+                        nextBoard[i][j] = 0;
+                    }
+                    if (sum == 2 || sum == 3) {
+                        nextBoard[i][j] = 1;
+                    }
+                }
+                if(prevBoard[i][j]==0 ) {
+                    if( sum==3){
+                        nextBoard[i][j]=1;
+                    }
+                    if(Math.random()>0.5){
                         nextBoard[i][j]=1;
                     }
                 }
