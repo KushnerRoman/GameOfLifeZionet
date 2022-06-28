@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 public class GridGameOfLifeGUI extends JFrame {
 
     String difficulty="Medium";
+    String rule="Conway";
     int chooseDelay=2000;
 
     public GridGameOfLifeGUI() {
@@ -26,6 +27,22 @@ public class GridGameOfLifeGUI extends JFrame {
 
 
         JTextField textOptionsForDelay = new JTextField(10);
+        JTextField textOptionsForRule = new JTextField(10);
+
+        JComboBox<String> boxOptionsRules = new JComboBox<String>();
+        boxOptionsRules.setSize(70, 70);
+        boxOptionsRules.addItem("Conway");
+        boxOptionsRules.addItem("Spontaneous");
+        boxOptionsRules.addItem("Hyper Active");
+        boxOptionsRules.addItem("High Life");
+        boxOptionsRules.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                rule = boxOptionsRules.getSelectedItem().toString();
+                textOptionsForRule.setText(rule);
+            }
+        });
+
 
         JComboBox<String> boxOptionsForDelay = new JComboBox<>();
         boxOptionsForDelay.setSize(70, 70);
@@ -138,6 +155,10 @@ public class GridGameOfLifeGUI extends JFrame {
         add(panelText);
         add(boxOptionsForDelay);
 
+        panelText.add(textOptionsForRule);
+        add(panelText);
+        add(boxOptionsRules);
+
 
 
 
@@ -152,7 +173,7 @@ public class GridGameOfLifeGUI extends JFrame {
 
 
             dispose();
-            new GameOfLife(chooseRows, chooseRows,difficulty,chooseDelay);
+            new GameOfLife(chooseRows, chooseRows,difficulty,chooseDelay,rule);
 
         });
     }
