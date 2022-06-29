@@ -82,7 +82,45 @@ public class GameOfLife extends JFrame {
                     }
                 }
 
+      for (int i = 0; i < cells.length; i++) {
+                    for (int j = 0; j < cells[i].length; j++) {
+                        int finalJ = j;
+                        int finalI = i;
+                        cells[i][j].addMouseListener(new MouseListener() {
+                            public void mouseClicked(MouseEvent e) {
+                                if (e.getButton() == MouseEvent.BUTTON1) {
+                                    cells[finalI][finalJ].setBackground(Color.BLACK);
+                                    oneDBoard[finalI][finalJ] = 1;
+                                } else if (e.getButton() == MouseEvent.BUTTON3) {
+                                    cells[finalI][finalJ].setBackground(Color.CYAN);
+                                    oneDBoard[finalI][finalJ] = 0;
+                                }
+                            }
 
+                            @Override
+                            public void mousePressed(MouseEvent e) {
+                                oneDBoard[finalI][finalJ] = 1;
+
+                            }
+
+                            @Override
+                            public void mouseReleased(MouseEvent e) {
+
+                            }
+
+                            @Override
+                            public void mouseEntered(MouseEvent e) {
+
+                            }
+
+                            @Override
+                            public void mouseExited(MouseEvent e) {
+
+                            }
+
+                        });
+                    }
+                }
             }
 
         });
