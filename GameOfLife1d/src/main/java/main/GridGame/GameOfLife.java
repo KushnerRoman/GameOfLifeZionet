@@ -92,16 +92,20 @@ public class GameOfLife extends JFrame {
                             public void mouseClicked(MouseEvent e) {
                                 if (e.getButton() == MouseEvent.BUTTON1) {
                                     cells[finalI][finalJ].setBackground(Color.BLACK);
-                                    oneDBoard[finalI][finalJ] = 1;
+                                    
                                 } else if (e.getButton() == MouseEvent.BUTTON3) {
                                     cells[finalI][finalJ].setBackground(Color.CYAN);
-                                    oneDBoard[finalI][finalJ] = 0;
+                                  
                                 }
                             }
 
                             @Override
                             public void mousePressed(MouseEvent e) {
-                                oneDBoard[finalI][finalJ] = 1;
+                                if(oneDBoard[finalI][finalJ]==1){
+                                    oneDBoard[finalI][finalJ]=0;
+                                }else{
+                                    oneDBoard[finalI][finalJ]=1;
+                                }
 
                             }
 
